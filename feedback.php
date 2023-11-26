@@ -57,49 +57,50 @@
 			<meta charset="utf-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1" />
 			<link rel="stylesheet" href="static/css/styles.css"/>
-            <link rel="stylesheet" href="static/css/shop.css"/>
 			<link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+            <script type="text/javascript" src="static/js/feedback.js"></script>
 		</div>
 	</header>
 	<body>
-    <div class="cards">
-        <?php
-            while ($book = mysqli_fetch_array($books)){
-        ?>
-        <div class="card" href="info.php?id="<?php echo $book['id'] ?>>
-            <div class="card_top">
-                <a href="#" class="card_image">
-                <img
-                    src="static/ico/<?php echo $book['ico'];?>.png"
-                    alt="<?php echo $book['author'];?> <?php echo $book['name'];?>"
-                />
-                </a>
-            </div>
-            <div class="card_bottom">
-                <a href="#" class="card_title">
-                    <?php echo $book['author']."<br/>"; echo $book['name'];?>
-                </a>
-            <?php
-                if($book['count'] != 0){
-            ?>
-                <div class="card_price"><?php echo $book['price']."₽";?></div>
-                <button class="card_add">В корзину</button>
-            <?php
-                }else{
-            ?>
-                <div class="card_price">Нет в наличии</div>
-                <button id="disabled" class="card_add">В корзину</button>
-            <?php
-                };
-            ?>
-            </div>
-        </div>
-    <?php
-        }
-    ?>
-    </div>
+        <div class="modal-form">
+			<form name="feedback" method="post" action="javascript:feedback()">
+				<p><h2>Форма обратной связи</h2></p>
+				<p><b>Фамилия:</b>
+					<input type="text" name="secondname" size="40">
+				</p>
+				<p><b>Имя:</b>
+					<input type="text" name="firstname" size="40">
+				</p>
+				<p><b>Отчество:</b>
+					<input type="text" name="middlename" size="40">
+				</p>
+                <p><b>Почта:</b>
+					<input type="text" name="email" size="40" placeholder="your_mail@mail.com" >
+				</p>
+				<p><b>Откуда узнали о нас:</b>
+					<input type="radio" name="source" value="search">Реклама из интернета
+					<input type="radio" name="source" value="friends">Рассказали друзья
+				</p>
+				<p><b>Тип обращения:</b>
+					<select size="1" style="width: 200px;" name="type">
+						<option selected value="1" name="suggest">Предложение</option>
+						<option value="2" name="complain">Жалоба</option>					
+					</select>
+				</p>
+				<p><b>Текст обращения:</b>
+					<textarea rows="10" cols="45" name="text"></textarea>
+				</p>
+				<p><b>Прикрепите дополнительные файлы:</b>
+					<input type="file" name="f">
+				</p>
+				<p><b>Согласие на обработку персональных данных</b>
+					<input type="checkbox" name="pd">
+				<p>
+				<input type="submit" value="Отправить">
+			</form>
+		</div>
 	</body>
 	<footer>
 	    <div class="footer-container">

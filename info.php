@@ -1,25 +1,30 @@
+<?php
+    include "db.php";
+    $books = mysqli_query($mysql, "SELECT * FROM `books`");
+    $users = mysqli_query($mysql,"SELECT * FROM `users`");
+?>
 <!doctype html>
 <html lang="ru">
-    <head>
+    <header>
+    <title>Рубежный контроль 2 Комендант 221-362</title>
 	    <div class="header">
-			<title>Рубежный контроль 2 Комендант 221-362</title>
             <div class="header-item" id="ico">
 				<img src="static/ico/ico.png"></img>
 			</div>
 			<div class="header-item" id="title-item">
-				<div class="nav-title"><h1>О магазине</h1></div>
+				<div class="nav-title"><h1>Заказать книги онлайн</h1></div>
 			</div>
-			<div class="header-item">
+			<div class="header-item" id="nav-item">
 				<div class="nav">
 					<ul class="nav-ul">
                         <li>
 							<form method="post" action="shop.php">
-								<input class="nav-button" type="submit" value="Выбрать и заказать">
+								<input class="nav-button" id="selected-input" type="submit" value="Выбрать и заказать">
 							</form>
 						</li>
 						<li>
 							<form method="post" action="index.html">
-								<input class="nav-button" id="selected-input" type="submit" value="О магазине">
+								<input class="nav-button" type="submit" value="О магазине">
 							</form>
 						</li>
 						<li>
@@ -39,33 +44,44 @@
                         <a>asdf</a>
                     </div>
                 </div>
+                <div class="lk-ico"><div>
+                <div class="lk-goods">
+                    <div class="lk-ico">
+                        <img src="static/ico/basket.png"></img>
+                    </div>
+                    <div class="lk-ico-text">
+                        <a> Выбрано товаров: </a>
+                    </div>
+                </div>
             </div>
 			<meta charset="utf-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1" />
 			<link rel="stylesheet" href="static/css/styles.css"/>
-			<link rel="stylesheet" href="static/css/index.css"/>
+            <link rel="stylesheet" href="static/css/info.css"/>
 			<link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
-			<script type="text/javascript" src="static/js/slideshow.js"></script>
 		</div>
-	</head>
+	</header>
 	<body>
-	    <div class="slideshow">
-            <div class="slide fade">
-                <div class="number">1 / 2</div>
-                <img src="static/ico/slide1.png" style="width:100%">
-            </div>
-            <div class="slide fade">
-                <div class="number">2 / 2</div>
-                <img src="static/ico/slide2.png" style="width:100%">
-            </div>
-            <a class="prev" onclick="switchSlide(-1)">&#10094;</a>
-            <a class="next" onclick="switchSlide(1)">&#10095;</a>
-            <div class="dots" style="text-align:center">
-                <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-              </div>
+        <?php    
+            $id = $_GET['id'];
+            $book = mysqli_query($mysql,"SELECT * FROM `books` WHERE id =".$id)->fetch_assoc();
+            $descr = mysqli_query($mysql,"SELECT * FROM `descriptions` WHERE id =".$id)->fetch_assoc();
+
+        ?>
+        <h1><?php echo $book["author"] . ' ' . $book["name"] ?></h1>
+        <div class="image">
+            <img
+                src="static/ico/<?php echo $book['ico'];?>.png"
+                alt="<?php echo $book['author'];?> <?php echo $book['name'];?>"
+            />
+        </div>
+        <div class="description">
+            <a><?php echo $descr["description"]; ?></a>
+        </div>
+        <div class="count">
+            <a>Осталось на складе: <?php echo $book["count"]?></a>
         </div>
 	</body>
 	<footer>
